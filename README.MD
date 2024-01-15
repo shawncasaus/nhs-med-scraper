@@ -20,7 +20,6 @@ Scrape NHS Meds
 
 ```
 npm install
-
 ```
 
 ## Usage
@@ -29,21 +28,18 @@ npm install
 
 ```
 npm start
-
 ```
 
 - To fix linting issues:
 
 ```
 npm lint:fix
-
 ```
 
 - To format code:
 
 ```
 npm format
-
 ```
 
 ## Limitations Thoughts and Known Issues
