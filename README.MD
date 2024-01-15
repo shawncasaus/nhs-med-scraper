@@ -35,7 +35,7 @@ npm start
 - To fix linting issues:
 
 ```
-npm lint:fix"error": "No details found"
+npm lint:fix
 
 ```
 
