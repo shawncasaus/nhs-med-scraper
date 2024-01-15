@@ -45,7 +45,7 @@ npm format
 ## Limitations Thoughts and Known Issues
 
 - Is designed to scrape specifically the URL: https://www.nhs.uk/medicines/
-- Most medications have a foirmat of data inside sublinks, this code only handles these medications
+- Most medications have a format of data inside sublinks, this code only handles these medications
 - For Medications of a single page information format the data is currently being displayed as: "error": "No details found" (this needs to be handled)
 - The Pregnancy and breastfeeding section appears to be missing data, the function to handle this needs to be modified
 - Need to build the Using with other medicines and the Common questions scraper logic
