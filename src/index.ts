@@ -1,5 +1,5 @@
 import ScrapeNhsMeds from './get-nhs-meds'
 
+const running: string = 'Running!'
+console.log(running)
 ScrapeNhsMeds()
-const greeting: string = 'Hello, TypeScript!'
-console.log(greeting)
