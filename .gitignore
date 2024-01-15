@@ -1,0 +1,59 @@
+# Node.js
+node_modules/
+
+# TypeScript
+*.tsbuildinfo
+dist/
+
+# Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Dependency directories
+bower_components/
+jspm_packages/
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+*.sqlite3
+
+# Output files
+*.log
+*.pem
+*.db
+*.sqlite
+
+# Environment files
+.env
+.env.local
+.env.*.local
+.env.test
+.env.production
+
+# Coverage directory
+coverage/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# npm
+npm-debug.log*
+.pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Yarn
+yarn.lock
+.pnp.*
+.pnp.js
