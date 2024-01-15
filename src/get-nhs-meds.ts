@@ -1,8 +1,8 @@
-import puppeteer from 'puppeteer'
+import puppeteer, { Page } from 'puppeteer'
 import fs from 'fs'
 
-async function extractAboutData(page: any, link: string) {
-  await page.goto(link as string)
+async function extractAboutData<T extends Page>(page: T, link: string) {
+  await page.goto(link)
   const AboutData = await page.evaluate(() => {
     const aboutSection = document.querySelector('section:nth-of-type(1)')
     const paragraphs = aboutSection ? aboutSection.querySelectorAll('p') : []
@@ -28,8 +28,8 @@ async function extractAboutData(page: any, link: string) {
   return { link, AboutData, KeyFacts }
 }
 
-async function extractLimitationsData(page: any, link: string) {
-  await page.goto(link as string)
+async function extractLimitationsData<T extends Page>(page: T, link: string) {
+  await page.goto(link)
   const LimitationsData = await page.evaluate(() => {
     const sectionElement = document.querySelector('section')
 
@@ -43,8 +43,8 @@ async function extractLimitationsData(page: any, link: string) {
   return { link, LimitationsData }
 }
 
-async function extractInstructionsData(page: any, link: string) {
-  await page.goto(link as string)
+async function extractInstructionsData<T extends Page>(page: T, link: string) {
+  await page.goto(link)
   const sectionOneData = await page.evaluate(() => {
     const sectionData = document.querySelector('section:nth-of-type(1)')
     const h2Items = sectionData ? sectionData.querySelectorAll('h2') : []
@@ -73,7 +73,8 @@ async function extractInstructionsData(page: any, link: string) {
   return { link, InstructionsData }
 }
 
-async function extractSideEffectsData(page: any, link: string) {
+async function extractSideEffectsData<T extends Page>(page: T, link: string) {
+  await page.goto(link)
   const sectionOneData = await page.evaluate(() => {
     const sectionData = document.querySelector('section:nth-of-type(1)')
     const h2Items = sectionData ? sectionData.querySelectorAll('h2') : []
@@ -130,7 +131,8 @@ async function extractSideEffectsData(page: any, link: string) {
   return { link, SideEffectsData }
 }
 
-async function extractBreastFeedingData(page: any, link: string) {
+async function extractBreastFeedingData<T extends Page>(page: T, link: string) {
+  await page.goto(link)
   const BreastFeedingData = await page.evaluate(() => {
     const sectionData = document.querySelector('section')
     const h2Items = sectionData ? sectionData.querySelectorAll('h2') : []
