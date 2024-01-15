@@ -3,10 +3,10 @@ import fs from 'fs'
 
 async function extractAboutData(page: any, link: string) {
   await page.goto(link as string)
-  const section1Data = await page.evaluate(() => {
-    const section1 = document.querySelector('section:nth-of-type(1)')
-    const paragraphs = section1 ? section1.querySelectorAll('p') : []
-    const listItems = section1 ? section1.querySelectorAll('ul li') : []
+  const AboutData = await page.evaluate(() => {
+    const aboutSection = document.querySelector('section:nth-of-type(1)')
+    const paragraphs = aboutSection ? aboutSection.querySelectorAll('p') : []
+    const listItems = aboutSection ? aboutSection.querySelectorAll('ul li') : []
 
     const paragraphData = Array.from(paragraphs).map((paragraph) => paragraph.textContent?.trim())
     const listData = Array.from(listItems).map((listItem) => listItem.textContent?.trim())
@@ -16,21 +16,21 @@ async function extractAboutData(page: any, link: string) {
       listItems: listData,
     }
   })
-  const section2Data = await page.evaluate(() => {
-    const section2 = document.querySelector('section:nth-of-type(2)')
-    const keyFactsListItems = section2 ? section2.querySelectorAll('ul li') : []
+  const KeyFacts = await page.evaluate(() => {
+    const keyFactsSection = document.querySelector('section:nth-of-type(2)')
+    const keyFactsListItems = keyFactsSection ? keyFactsSection.querySelectorAll('ul li') : []
 
     const data = Array.from(keyFactsListItems).map((listItem) => listItem.textContent?.trim())
 
     return data
   })
 
-  return { link, AboutData: section1Data, KeyFacts: section2Data }
+  return { link, AboutData, KeyFacts }
 }
 
 async function extractLimitationsData(page: any, link: string) {
   await page.goto(link as string)
-  const sectionData = await page.evaluate(() => {
+  const LimitationsData = await page.evaluate(() => {
     const sectionElement = document.querySelector('section')
 
     if (sectionElement) {
@@ -40,15 +40,15 @@ async function extractLimitationsData(page: any, link: string) {
     }
   })
 
-  return { link, Data: sectionData }
+  return { link, LimitationsData }
 }
 
 async function extractInstructionsData(page: any, link: string) {
   await page.goto(link as string)
   const sectionOneData = await page.evaluate(() => {
-    const section1 = document.querySelector('section:nth-of-type(1)')
-    const h2Items = section1 ? section1.querySelectorAll('h2') : []
-    const pItems = section1 ? section1.querySelectorAll('p') : []
+    const sectionData = document.querySelector('section:nth-of-type(1)')
+    const h2Items = sectionData ? sectionData.querySelectorAll('h2') : []
+    const pItems = sectionData ? sectionData.querySelectorAll('p') : []
     const pData = Array.from(pItems).map((p) => p.textContent?.trim())
     const h2Data = Array.from(h2Items).map((h2) => h2.textContent?.trim())
     return {
@@ -57,9 +57,9 @@ async function extractInstructionsData(page: any, link: string) {
     }
   })
   const sectionTwoData = await page.evaluate(() => {
-    const section1 = document.querySelector('section:nth-of-type(2)')
-    const h2Items = section1 ? section1.querySelectorAll('h2') : []
-    const pItems = section1 ? section1.querySelectorAll('p') : []
+    const sectionData = document.querySelector('section:nth-of-type(2)')
+    const h2Items = sectionData ? sectionData.querySelectorAll('h2') : []
+    const pItems = sectionData ? sectionData.querySelectorAll('p') : []
     const pData = Array.from(pItems).map((p) => p.textContent?.trim())
     const h2Data = Array.from(h2Items).map((h2) => h2.textContent?.trim())
     return {
@@ -68,16 +68,22 @@ async function extractInstructionsData(page: any, link: string) {
     }
   })
 
-  return { link, sectionOneData, sectionTwoData }
+  const InstructionsData = Object.assign({}, sectionOneData, sectionTwoData)
+
+  return { link, InstructionsData }
 }
 
 async function extractSideEffectsData(page: any, link: string) {
   const sectionOneData = await page.evaluate(() => {
-    const section1 = document.querySelector('section:nth-of-type(1)')
-    const h2Items = section1 ? section1.querySelectorAll('h2') : []
-    const pItems = section1 ? section1.querySelectorAll('p') : []
-    const divContentLi = section1 ? section1.querySelectorAll('div .nhsuk-card__content ul li') : []
-    const divContentP = section1 ? section1.querySelectorAll('div .nhsuk-card__content p') : []
+    const sectionData = document.querySelector('section:nth-of-type(1)')
+    const h2Items = sectionData ? sectionData.querySelectorAll('h2') : []
+    const pItems = sectionData ? sectionData.querySelectorAll('p') : []
+    const divContentLi = sectionData
+      ? sectionData.querySelectorAll('div .nhsuk-card__content ul li')
+      : []
+    const divContentP = sectionData
+      ? sectionData.querySelectorAll('div .nhsuk-card__content p')
+      : []
     const pData = Array.from(pItems).map((p) => p.textContent?.trim())
     const h2Data = Array.from(h2Items).map((h2) => h2.textContent?.trim())
     const divContentData = Array.from(divContentLi)
@@ -94,11 +100,15 @@ async function extractSideEffectsData(page: any, link: string) {
     }
   })
   const sectionTwoData = await page.evaluate(() => {
-    const section1 = document.querySelector('section:nth-of-type(1)')
-    const h2Items = section1 ? section1.querySelectorAll('h2') : []
-    const pItems = section1 ? section1.querySelectorAll('p') : []
-    const divContentLi = section1 ? section1.querySelectorAll('div .nhsuk-card__content ul li') : []
-    const divContentP = section1 ? section1.querySelectorAll('div .nhsuk-card__content p') : []
+    const sectionData = document.querySelector('section:nth-of-type(2)')
+    const h2Items = sectionData ? sectionData.querySelectorAll('h2') : []
+    const pItems = sectionData ? sectionData.querySelectorAll('p') : []
+    const divContentLi = sectionData
+      ? sectionData.querySelectorAll('div .nhsuk-card__content ul li')
+      : []
+    const divContentP = sectionData
+      ? sectionData.querySelectorAll('div .nhsuk-card__content p')
+      : []
     const pData = Array.from(pItems).map((p) => p.textContent?.trim())
     const h2Data = Array.from(h2Items).map((h2) => h2.textContent?.trim())
     const divContentData = Array.from(divContentLi)
@@ -115,7 +125,32 @@ async function extractSideEffectsData(page: any, link: string) {
     }
   })
 
-  return { link, sectionOneData, sectionTwoData }
+  const SideEffectsData = Object.assign({}, sectionOneData, sectionTwoData)
+
+  return { link, SideEffectsData }
+}
+
+async function extractBreastFeedingData(page: any, link: string) {
+  const BreastFeedingData = await page.evaluate(() => {
+    const sectionData = document.querySelector('section')
+    const h2Items = sectionData ? sectionData.querySelectorAll('h2') : []
+    const pItems = sectionData ? sectionData.querySelectorAll('p') : []
+    const divContentLi = sectionData
+      ? sectionData.querySelectorAll('div .nhsuk-card__content ul li')
+      : []
+    const pData = Array.from(pItems).map((p) => p.textContent?.trim())
+    const h2Data = Array.from(h2Items).map((h2) => h2.textContent?.trim())
+    const divContentData = Array.from(divContentLi).map((data) =>
+      (data as HTMLElement).textContent?.trim(),
+    )
+    return {
+      paragraphData: pData,
+      headerData: h2Data,
+      divContentData: divContentData,
+    }
+  })
+
+  return { link, BreastFeedingData }
 }
 
 async function ScrapeNhsMeds() {
@@ -185,15 +220,16 @@ async function ScrapeNhsMeds() {
       } else if (name === 'Side effects') {
         details[name] = await extractSideEffectsData(page, link as string)
       } else if (name === 'Pregnancy and breastfeeding') {
-        // Handle Pregnancy and breastfeeding
+        details[name] = await extractBreastFeedingData(page, link as string)
       } else if (name === 'Using with other medicines') {
-        // Handle Using with other medicines
+        // TODO: Handle Using with other medicines
       } else if (name === 'Common questions') {
-        // Handle Common questions
+        // TODO: Handle Common questions
       }
     }
 
     if (Object.keys(details).length === 0) {
+      // TODO: Handle medications with one page
       medicineDetails[name] = { link, details: { error: 'No details found' } }
     } else {
       medicineDetails[name] = { link, details }
